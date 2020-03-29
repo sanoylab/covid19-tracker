@@ -121,7 +121,9 @@
             let totalActive = 0;
 
             countryName.forEach(function (name) {
-            $('#country_list').append(`<tr style="cursor:pointer"><td><h5 onClick="javascript:CountryDetail('${name.country_name.toUpperCase()}','${name.deaths}',${name.active_cases})"><strong>${name.country_name.toUpperCase()}</strong></h5></td>
+              let activeCase = name.active_cases.toString().replace(/\,/g,'');
+              console.log(activeCase)
+            $('#country_list').append(`<tr style="cursor:pointer"><td><h5 onClick="javascript:CountryDetail('${name.country_name.toUpperCase()}','${name.deaths}','${name.total_recovered}','${name.active_cases}')"><strong>${name.country_name.toUpperCase()}</strong></h5></td>
             <td><h4>${name.cases}</h4></td> <td><h4 style="color:red">${name.deaths}</h4></td></tr>`);
             totalConfirmed += parseInt(name.cases);
             totalDeath += parseInt(name.deaths);
@@ -136,8 +138,8 @@
             console.log(countries_data)
         });
 
-        function CountryDetail(countryName, death, recover, active) {
-            console.log(active)
+        function CountryDetail(countryName, death, recover, active_cases) {
+           
             let countryTitle = document.getElementById('countryName');
             let countryDeaths = document.getElementById('death') ;
             let countryRecovered = document.getElementById('recovered') ;
@@ -147,8 +149,8 @@
             countryRecovered.textContent = recover ;
 
             initMap();
-            summaryChart(active, death, recover, countryName );
-            summaryTable(active, death, recover, countryName );
+            summaryChart(active_cases.replace(/\,/g,''), death.replace(/\,/g,''), recover.toString().replace(/\,/g,''), countryName );
+            summaryTable(active_cases, death, recover, countryName );
         }
     </script>
 
@@ -183,7 +185,9 @@
         });
       }
     </script>
-
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQLFZTDcfCGO7OYYmai9HHPNqtOLeBZA&callback=initMap">
+    </script>
 
     <script>
       function summaryChart(active, death, recovered,title){
