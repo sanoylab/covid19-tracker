@@ -183,9 +183,7 @@
         });
       }
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQLFZTDcfCGO7OYYmai9HHPNqtOLeBZA&callback=initMap">
-    </script>
+
 
     <script>
       function summaryChart(active, death, recovered,title){
