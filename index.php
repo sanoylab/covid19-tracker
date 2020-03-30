@@ -32,6 +32,7 @@
                     University and <a href="" target="_blank">DXY</a>. Data currently available on the following zoom
                     levels: City level - US, Canada and Australia; Province level - China; Country level - other
                     countries. </p>
+                    <input type="text" id="txtSearch" onkeyup="myFunction()" placeholder="Search for country name.." title="Type in a country name">
             <table id="country_list" class="table table-hover">
                 <tr>
                     <th></th>
@@ -185,7 +186,10 @@
         });
       }
     </script>
-   
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYQLFZTDcfCGO7OYYmai9HHPNqtOLeBZA&callback=initMap">
+    </script>
+
     <script>
       function summaryChart(active, death, recovered,title){
 console.log('yonas', active, death, recovered, title);
@@ -224,6 +228,27 @@ console.log('yonas', active, death, recovered, title);
 
       }
     </script>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("txtSearch");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("country_list");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
 
 </body>
 
