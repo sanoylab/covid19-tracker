@@ -144,7 +144,6 @@
             let countryTitle = document.getElementById('countryName');
             let countryDeaths = document.getElementById('death') ;
             let countryRecovered = document.getElementById('recovered') ;
-
             countryTitle.textContent = countryName;
             countryDeaths.textContent = death;
             countryRecovered.textContent = recover ;
