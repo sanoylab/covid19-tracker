@@ -183,11 +183,16 @@
 
         }
         function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
+            // does this feature have a property named popupContent?
+            layer.on('mouseover', function(){
+
+            });
+            if (feature.properties && feature.properties.popupContent) {
+                layer.on('mouseover', function() { layer.openPopup(); });
+                layer.on('mouseout', function() { layer.closePopup(); });
+                layer.bindPopup(feature.properties.popupContent);
+            }
+        }
         function covidMap(data, lat, long){
             document.getElementById('covid19-map').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
             var geojson = {
@@ -237,10 +242,12 @@
                 tileSize: 512,
                 zoomOffset: -1
             }).addTo(map);
-            
+            map.on('mouseover',function(ev) {
+     console.log('yyyyyyyyy')
+    })
             L.geoJson(geojson, { onEachFeature: onEachFeature, pointToLayer: function (feature, latlng) {
-                console.log(feature)
-        return L.circleMarker(latlng, {
+                
+                return L.circleMarker(latlng, {
                     radius: calculateRadius(feature.radius),
                     fillColor: "#dc3545",
                     color: "#dc3545",
