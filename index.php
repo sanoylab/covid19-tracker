@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covid 19 Tracker</title>
-    <link
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i"
-        rel="stylesheet">
+    <title>Covid - 19 Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Roboto&display=swap" rel="stylesheet">
+
+
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin=""/>
+
+  <!-- Esri Leaflet Geocoder -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/c3.css">
@@ -20,24 +22,48 @@
 </head>
 
 <body>
+    <nav class="header">
+       <h1>COVID-19 Tracker</h1>
+    </nav>
     <div class="container">
         <div class="country-list">
             <div class="country-list-bg"></div>
             <div class="country-list-content">
-                <h1>Tracking Coronavirus COVID-19</h1>
-                <p>The first case of the new Coronavirus COVID-19 was recorded on 31 December in Wuhan, China (<a
-                        href="" target="_blank">WHO</a>). Since then, 335,955 confirmed cases have been recorded
-                    worldwide. This visualization shows the near real-time status based on data from the <a href=""
-                        target="_blank">Center for Systems Science and Engineering (CSSE)</a> at Johns Hopkins
-                    University and <a href="" target="_blank">DXY</a>. Data currently available on the following zoom
-                    levels: City level - US, Canada and Australia; Province level - China; Country level - other
-                    countries. </p>
-                    <input type="text" id="txtSearch" onkeyup="myFunction()" placeholder="Search for country name.." title="Type in a country name">
+               
+                <div class="infoTile" style="width: 272px;">
+                <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
+             
+                <div class="confirmed">1,083,084</div>
+                <div class="infoTileData">
+                    <h2 class="legend">
+                        <div class="color" style="background: rgb(244, 195, 99);"></div>
+                        <div class="description">Active cases</div>
+                        <div class="total">799,419</div>
+                    </h2>
+                    <h2 class="legend">
+                        <div class="color" style="background: rgb(96, 187, 105);"></div>
+                        <div class="description">Recovered cases</div>
+                        <div class="total">225,422</div>
+                    </h2>
+                        <h2 class="legend">
+                            <div class="color" style="background: rgb(118, 118, 118);"></div>
+                            <div class="description">Fatal cases</div>
+                            <div class="total">58,243</div>
+                    </h2>
+                </div>
+            </div>
+                    
+                      <!--  <input type="text" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">-->
+
+                        <div id="country">
+
+                        </div>
             <table id="country_list" class="table table-hover">
                 <tr>
                     <th></th>
-                    <th>Confirmed</th>
-                    <th>Death</th>
+                    <th></th>
+                    <th></th>
+                 
                 <tr>
 
             </table>
@@ -46,27 +72,9 @@
      </div>
         <div class="map">
 
-         <div id="map" style="width: 100%; height: 100vh;"></div>
+         <div id="covid19-map" style="width: 100%; height: 100vh;"></div>
         </div>
-        <div class="country-detail">
-        <h1 id="countryName"></h1>
-        <div class="country-summary">
-            <div class="total-death">
-                <h2 id="death"></h2>
-                <p>Total Death</p>
-            </div>
-            <div class="total-recovered">
-                <h2 id="recovered"></h2>
-                <p>Total Recovered</p>
-            </div>
-        </div>
-        <div id="donut"></div>
-        <div id='summaryTable' style="margin: 2rem">
-        </div>
-        <div>
-        <a class="btnDetail" href="detail.html" target="_blank">More Detail Data</a>
-</div>
-        </div>
+        
     </div>
 <?php
     
@@ -75,18 +83,15 @@
       $curl = curl_init();
 
       curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php",
+        CURLOPT_URL => "https://corona.lmao.ninja/countries",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-          "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
-          "x-rapidapi-key: 7341296eb8msh5dc5fabdd040449p14cc9bjsn1ba24667d2f0"
-        ),
+        CURLOPT_CUSTOMREQUEST => "GET"
+        
       ));
       
       $response = curl_exec($curl);
@@ -106,6 +111,9 @@
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script src="js/d3.min.js"></script>
 
+      <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
 
 
 
@@ -114,80 +122,158 @@
     <script>
         window.addEventListener('load', function () {
             let countries_data = <?php echo all_country_list(); ?> ;
-            let countryName = countries_data.countries_stat;
-            let countryUl = document.getElementById('country_list');
+
             let totalConfirmed = 0;
             let totalDeath = 0;
             let totalRecovered = 0;
             let totalActive = 0;
+        
 
-            countryName.forEach(function (name) {
-              let activeCase = name.active_cases.toString().replace(/\,/g,'');
-              console.log(activeCase)
-            $('#country_list').append(`<tr style="cursor:pointer"><td><h5 onClick="javascript:CountryDetail('${name.country_name.toUpperCase()}','${name.deaths}','${name.total_recovered}','${name.active_cases}')"><strong>${name.country_name.toUpperCase()}</strong></h5></td>
-            <td><h4>${name.cases}</h4></td> <td><h4 style="color:red">${name.deaths}</h4></td></tr>`);
+
+            countries_data.forEach(function (name) {
+                $('#country').append(`
+                
+                <div class="areas">
+                    <div id="${name.countryInfo._id}" class="area" onClick="return CountryDetail('${name.country}', '${name.deaths}', '${name.recovered}', '${name.active}', '${name.countryInfo.lat}', '${name.countryInfo.long}')">
+                
+                            <div class="areaName" title="${name.country}">
+                            <img src="${name.countryInfo.flag}" style="width:30px; height: 30px; border-radius: 50%;"><span>${name.country}</span></div>
+                            <div class="areaTotal">
+                                <div class="secondaryInfo">${name.cases}</div>
+                            </div>
+                
+                    </div>
+                </div>`);
+
+
+              
+
+
+         //       $('#country_list').append(`<tr style="cursor:pointer"><td><img src="${name.countryInfo.flag}" style="width:30px; height: 30px; border-radius: 50%;"></td><td><span onClick="return CountryDetail('${name.country}', '${name.deaths}', '${name.recovered}', '${name.active}', '${name.countryInfo.lat}', '${name.countryInfo.long}')">${name.country}</span></td>
+     //       <td>${name.cases}</td> </tr>`);
+
+     
+            //<td><h4>${name.cases}</h4></td> <td><h4 style="color:red">${name.deaths}</h4></td></tr>`);
+  
             totalConfirmed += parseInt(name.cases);
             totalDeath += parseInt(name.deaths);
-            totalActive += parseInt(name.active_cases)
-            totalRecovered += parseInt(name.total_recovered);
-           
-            }); document.getElementById('countryName').innerHTML = "WORLD";//+totalConfirmed;
-            document.getElementById('death').innerHTML = totalDeath;
-            document.getElementById('recovered').innerHTML = parseInt(totalRecovered);
-            summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
-           // console.log('yonas')
-            console.log(countries_data)
+            totalActive += parseInt(name.active)
+            totalRecovered += parseInt(name.recovered);
+            });
+          //  document.getElementById('countryName').innerHTML = "Global";//+totalConfirmed;
+        //    document.getElementById('death').innerHTML = totalDeath;
+         //   document.getElementById('recovered').innerHTML = parseInt(totalRecovered);
+       //     summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
+    
+            covidMap(countries_data, 42.8333, 12.8333);
         });
 
-        function CountryDetail(countryName, death, recover, active_cases) {
-           
+        function CountryDetail(countryName, death, recover, active_cases, lat, long) {
+            let countries_data = <?php echo all_country_list(); ?> ;
             let countryTitle = document.getElementById('countryName');
             let countryDeaths = document.getElementById('death') ;
             let countryRecovered = document.getElementById('recovered') ;
-            countryTitle.textContent = countryName;
+            covidMap(countries_data, lat, long);
+           countryTitle.textContent = countryName;
             countryDeaths.textContent = death;
             countryRecovered.textContent = recover ;
-
-            initMap();
             summaryChart(active_cases.replace(/\,/g,''), death.replace(/\,/g,''), recover.toString().replace(/\,/g,''), countryName );
             summaryTable(active_cases, death, recover, countryName );
+           
+
         }
-    </script>
+        function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+    }
+}
+        function covidMap(data, lat, long){
+            document.getElementById('covid19-map').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
+            var geojson = {
+                type: "FeatureCollection",
+                features: [],
+                };
+                var geojsonMarkerOptions = {
+                    radius: 8,
+                    fillColor: "#dc3545",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                };
+            data.forEach((row)=>{
+                geojson.features.push({
+                    "radius": row.cases,
+                    "type": "Feature",
+                    "geometry": {
+                    "type": "Point",
+                    "coordinates": [row.countryInfo.long,row.countryInfo.lat]
+                    },
+                    "properties": {
+                    "stationName": row.countryInfo.iso2,
+                    "popupContent": `<table>
+                            <tr><td width="50px"><img style="width: 50px; height: 50px; border-radius: 50%" src="${row.countryInfo.flag}"></td><td><h1>${row.country.toUpperCase()}</h1></td></tr>
+                            <tr><td><h2>Cases:</h2> </td><td><h2>${row.cases}</h2></td></tr>
+                            <tr><td><h2>Deaths: </h2></td><td><h2>${row.deaths}</h2></td></tr>
+                            <tr><td><h2>Recovered: </h2></td><td><h2>${row.recovered}</h2></td></tr>
+                            <tr><td><h2>Active: </h2></td><td><h2>${row.active}</h2></td></tr>
+                            <tr><td><h2>Critical: </h2></td><td><h2>${row.critical}</h2></td></tr>`
+                    }
+                    })
 
-<script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 5,
-          center: {lat: -34.397, lng: 150.644}
-        });
-        var geocoder = new google.maps.Geocoder();
-/*
-        document.getElementById('submit').addEventListener('click', function() {
-          geocodeAddress(geocoder, map);
-        });
-        */
 
-        geocodeAddress(geocoder, map);
-      }
-
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('countryName').textContent;//document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            console.log('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-    </script>
+            })
+     
    
+            var mapboxAccessToken = "pk.eyJ1IjoiZXhwZXJ0c2Fub3kiLCJhIjoiY2s4OWNwZXkzMDVuZDNldnU3Y3N0N3IxcyJ9.B28AhJkQznwv8poyiLqz3A";
+            var map = new L.Map('mapid');
+            map.setView(new L.LatLng(lat,long), 4 );
+  
+            
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
+                id: 'mapbox/light-v9',
+                
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
+            
+            L.geoJson(geojson, { onEachFeature: onEachFeature, pointToLayer: function (feature, latlng) {
+                console.log(feature)
+        return L.circleMarker(latlng, {
+                    radius: calculateRadius(feature.radius),
+                    fillColor: "#dc3545",
+                    color: "#dc3545",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+    } }).addTo(map); 
+          
+            }
+           
+           let calculateRadius = (radius)=>{
+                       if((radius)/1000>20){
+                            return 25;
+                       }
+                       else if((radius)/1000 >10 && (radius)/1000 <20){
+                            return 15;
+                       }
+                       else if((radius)/1000 >5 && (radius)/1000 <10){
+                            return 10;
+                       }
+                       else if((radius)/1000 < 5){
+                            return 5;
+                       }
+                        
+                       else {
+                            return (radius)/1000;
+                       }
+           }
 
-    <script>
+            
+    </script>
+     <script>
       function summaryChart(active, death, recovered,title){
 console.log('yonas', active, death, recovered, title);
 
@@ -227,14 +313,14 @@ console.log('yonas', active, death, recovered, title);
     </script>
 
 <script>
-function myFunction() {
+function searhTable() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("txtSearch");
   filter = input.value.toUpperCase();
   table = document.getElementById("country_list");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[1];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -246,7 +332,6 @@ function myFunction() {
   }
 }
 </script>
-
 </body>
 
 </html>
