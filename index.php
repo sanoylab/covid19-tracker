@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid - 19 Tracker</title>
+    <link rel="icon" 
+      type="image/png" 
+      href="img/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Roboto&display=swap" rel="stylesheet">
 
 
@@ -203,7 +206,7 @@
             let countryTitle = document.getElementById('countryName');
             let countryDeaths = document.getElementById('death') ;
             let countryRecovered = document.getElementById('recovered') ;
-            covidMap(countries_data, lat, long,6);
+            covidMap(countries_data, lat, long,5);
            countryTitle.textContent = countryName;
             countryDeaths.textContent = death;
             countryRecovered.textContent = recover ;
@@ -284,11 +287,14 @@
      
    
             var mapboxAccessToken = "pk.eyJ1IjoiZXhwZXJ0c2Fub3kiLCJhIjoiY2s4OWNwZXkzMDVuZDNldnU3Y3N0N3IxcyJ9.B28AhJkQznwv8poyiLqz3A";
-            var map = new L.Map('mapid');
+            var map = new L.Map('mapid', {
+    minZoom: 3,
+    maxZoom: 6
+});
             map.setView(new L.LatLng(lat,long), zoom);
             map.flyTo(new L.LatLng(lat,long), zoom+1, {
         animate: true,
-        duration: 1,
+        duration: 0.5,
         easeLinearity: 1 ,
         noMoveStart	: false
 
