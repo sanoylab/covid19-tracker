@@ -205,6 +205,23 @@ h6 {
 
 
 
+.view{
+  list-style: none;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  padding: 5px;
+  float: right;
+  margin-bottom: 10px;
+  
+}
+#tabular-btn, #interactive-btn{
+  cursor: pointer;
+}
+
+
+
   #covid19-map{
     height: 100vh;
   }
@@ -236,9 +253,7 @@ h6 {
   .country-detail{
    display:none;
   }
-.header{
-  display:none;
-}
+
  
 
 }

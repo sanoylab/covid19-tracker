@@ -18,23 +18,34 @@
   <!-- Esri Leaflet Geocoder -->
   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css">
     <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/c3.css">
+    <style>
+      .map{
+        width: 70%;
+        margin: 0 auto;
+      }
+      .infoTile{
+        border: 1px solid #dee2e6;
+        margin: 10px 0px;
+      }
+      </style>
 
 </head>
 
 <body>
   
-    <div  class="container">
-        <div class="country-list">
+   
+        <div class="map">
         <nav class="header">
            <h1>COVID-19 Tracker</h1>
          </nav>
             <div class="country-list-content">
-                <ul class="view">
-                    
-                    <li><a id="tabular-btn" href="tabular.php" >Tabular view</a></li>
+            <ul class="view">
+                    <li><a id="interactive-btn" href="index.php">Interactive View</a></li>
+                 
                 </ul>
                 <div class="infoTile" style="width: 272px;">
                 <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
@@ -58,24 +69,28 @@
                     </h2>
                 </div>
             </div>
-                    
-                      <!--  <input type="text" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">-->
+        <table id="country_list-table" class="table table-hover table-striped table-bordered">
+                <tr>
+                    <th>Country, Other</th>
+                    <th>Total Cases</th>
+                    <th>New Cases</th>
+                    <th>Total Deaths</th>
+                    <th>New Deths</th>
+                    <th>Total Recovered</th>
+                    <th>Active Cases</th>
+                    <th>Serious, Critical Cases</th>
+                    <th>Tot Cases/ 1M pop</th>
+                    <th>Deaths/ 1M pop</th>
+                   
+                <tr>
 
-                        <div id="country">
-
-                        </div>
-     
-   
-            </div>
-     </div>
-        <div class="map">
-
-         <div id="covid19-map" style="width: 100%; "></div>
+            </table>
+        
         </div>
         
     </div>
-</div>
- 
+
+   
 <?php
     
     
@@ -158,35 +173,27 @@
             let totalRecovered = 0;
             let totalActive = 0;
         
-         let checkColor = (num)=>{
-             if(num > 0){
+         let checkColor = (num,type)=>{
+             if(num > 0 && type==='d'){
                  return `style="background: red; color:white;"`;
-             } 
+             } else if(num > 0 && type==='c'){
+              return `style="background: #FFEEAA; color:black;"`;
+             }
 
          }
 
             countries_data.forEach(function (name) {
-                $('#country').append(`
                 
-                <div class="areas">
-                    <div id="${name.countryInfo._id}" class="area" onClick="return CountryDetail('${name.country}', '${name.deaths}', '${name.recovered}', '${name.active}', '${name.countryInfo.lat}', '${name.countryInfo.long}')">
                 
-                            <div class="areaName" title="${name.country}">
-                            <img src="${name.countryInfo.flag}" style="width:30px; height: 30px; border-radius: 50%;"><span>${name.country}</span></div>
-                            <div class="areaTotal">
-                                <div class="secondaryInfo">${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                            </div>
-                
-                    </div>
-                </div>`);
+             
 
                 $('#country_list-table').append(`
                 <tr style="cursor:pointer">
                 <td>${name.country}</td>
                 <td>${name.cases}</td>
-                <td>${name.todayCases}</td>
+                <td ${checkColor(name.todayCases,"c")}>${Number(name.todayCases)>0?"+"+name.todayCases:""}</td>
                 <td>${name.deaths}</td>
-                <td ${checkColor(name.todayDeaths)}>${name.todayDeaths}</td>
+                <td ${checkColor(name.todayDeaths,"d")}>${Number(name.todayDeaths)>0?"+"+name.todayDeaths:""}</td>
                 <td>${name.recovered}</td>
                 <td>${name.active}</td>
                 <td>${name.critical}</td>
@@ -215,7 +222,7 @@
          //   document.getElementById('recovered').innerHTML = parseInt(totalRecovered);
        //     summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
     
-            covidMap(countries_data, 42.8333, 12.8333,4);
+           
         });
 
         function CountryDetail(countryName, death, recover, active_cases, lat, long) {
@@ -243,128 +250,13 @@
                 layer.bindPopup(feature.properties.popupContent);
             }
         }
-        function covidMap(data, lat, long,zoom){
-            document.getElementById('covid19-map').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
-            var geojson = {
-                type: "FeatureCollection",
-                features: [],
-                };
-                var geojsonMarkerOptions = {
-                    radius: 8,
-                    fillColor: "#dc3545",
-                    color: "#000",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                };
-            data.forEach((row)=>{
-                geojson.features.push({
-                    "radius": row.cases,
-                    "type": "Feature",
-                    "geometry": {
-                    "type": "Point",
-                    "coordinates": [row.countryInfo.long,row.countryInfo.lat]
-                    },
-                    "properties": {
-                    "stationName": row.countryInfo.iso2,
-                    "popupContent":`
-                        <div class="titleInfoBox">
-                        <img style="width: 50px; height: 50px; border-radius: 50%" src="${row.countryInfo.flag}">
-                        <span>${row.country.toUpperCase()}</span>
-                        </div>
-                        <div class="statLine">
-                          <div class="stat total">Total cases</div>
-                          <div class="statCount total">${row.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                        </div>
-                        <div class="statLine divider"></div>
-                        
-                        <div class="statLine">
-                          <div class="legendColor ongoing"></div>
-                          <div class="stat total">Active</div>
-                          <div class="statCount total">${row.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                        </div>
-                        <div class="statLine">
-                          <div class="legendColor recovered"></div>
-                          <div class="stat total">Recovered</div>
-                          <div class="statCount total">${row.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                        </div>
-                        <div class="statLine">
-                          <div class="legendColor fatal"></div>
-                          <div class="stat total">Death</div>
-                          <div class="statCount total">${row.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                        </div>`
-                    }
-
-                   
-                    
-                })
-
-
-            })
-     
-   
-            var mapboxAccessToken = "pk.eyJ1IjoiZXhwZXJ0c2Fub3kiLCJhIjoiY2s4OWNwZXkzMDVuZDNldnU3Y3N0N3IxcyJ9.B28AhJkQznwv8poyiLqz3A";
-            var map = new L.Map('mapid', {
-    minZoom: 3,
-    maxZoom: 11
-});
-            map.setView(new L.LatLng(lat,long), zoom);
-            map.flyTo(new L.LatLng(lat,long), zoom+1, {
-        animate: true,
-        duration: 0.5,
-        easeLinearity: 1 ,
-        noMoveStart	: false
-
-    });
-  
-            
-            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
-                id: 'mapbox/light-v9',
-                
-                tileSize: 512,
-                zoomOffset: -1
-            }).addTo(map);
-            map.on('mouseover',function(ev) {
-     
-    })
-            L.geoJson(geojson, { onEachFeature: onEachFeature, pointToLayer: function (feature, latlng) {
-                
-                return L.circleMarker(latlng, {
-                    radius: calculateRadius(feature.radius),
-                    fillColor: "#dc3545",
-                    color: "#dc3545",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                });
-    } }).addTo(map); 
-          
-            }
-           
-           let calculateRadius = (radius)=>{
-                       if((radius)/1000>20){
-                            return 25;
-                       }
-                       else if((radius)/1000 >10 && (radius)/1000 <20){
-                            return 15;
-                       }
-                       else if((radius)/1000 >5 && (radius)/1000 <10){
-                            return 10;
-                       }
-                       else if((radius)/1000 < 5){
-                            return 5;
-                       }
-                        
-                       else {
-                            return (radius)/1000;
-                       }
-           }
+        
 
             
     </script>
      <script>
       function summaryChart(active, death, recovered,title){
-console.log('yonas', active, death, recovered, title);
+
 
        
         var chart = c3.generate({
