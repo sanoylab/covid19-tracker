@@ -86,7 +86,9 @@ th {
       <li class="nav-item">
         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Global Summary</a>
       </li>
-      
+      <li class="nav-item">
+        <a class="nav-link"   href="index.php" role="tab" aria-controls="profile" aria-selected="false">Go back to Interactive</a>
+      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

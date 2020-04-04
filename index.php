@@ -304,10 +304,7 @@
      
    
             var mapboxAccessToken = "pk.eyJ1IjoiZXhwZXJ0c2Fub3kiLCJhIjoiY2s4OWNwZXkzMDVuZDNldnU3Y3N0N3IxcyJ9.B28AhJkQznwv8poyiLqz3A";
-            var map = new L.Map('mapid', {
-    minZoom: 3,
-    maxZoom: 11
-});
+            var map = new L.Map('mapid');
             map.setView(new L.LatLng(lat,long), zoom);
             map.flyTo(new L.LatLng(lat,long), zoom+1, {
         animate: true,
