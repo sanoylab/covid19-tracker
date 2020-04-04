@@ -185,7 +185,10 @@ h6 {
   grid-column-gap: 5px;
   position: relative;
 }
-
+.areas:hover{
+  border: 1px #555 solid;
+ 
+}
 .area .areaName {
   font-weight: 600;
   overflow: hidden;

@@ -33,22 +33,22 @@
                 <div class="infoTile" style="width: 272px;">
                 <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
              
-                <div class="confirmed">1,083,084</div>
+                <div id="cases" class="confirmed"></div>
                 <div class="infoTileData">
                     <h2 class="legend">
                         <div class="color" style="background: rgb(244, 195, 99);"></div>
                         <div class="description">Active cases</div>
-                        <div class="total">799,419</div>
+                        <div id="active" class="total">799,419</div>
                     </h2>
                     <h2 class="legend">
                         <div class="color" style="background: rgb(96, 187, 105);"></div>
                         <div class="description">Recovered cases</div>
-                        <div class="total">225,422</div>
+                        <div id="recovered" class="total">225,422</div>
                     </h2>
                         <h2 class="legend">
                             <div class="color" style="background: rgb(118, 118, 118);"></div>
                             <div class="description">Fatal cases</div>
-                            <div class="total">58,243</div>
+                            <div id="deaths" class="total">58,243</div>
                     </h2>
                 </div>
             </div>
@@ -104,7 +104,30 @@
       echo $response;
      }
     
-       
+     function Get_Global(){
+        $curl = curl_init();
+  
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://corona.lmao.ninja/all",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET"
+          
+        ));
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+  
+        //$response =json_decode($response);
+  
+        echo $response;
+       }
     
     ?>
     
@@ -123,6 +146,13 @@
         window.addEventListener('load', function () {
             let countries_data = <?php echo all_country_list(); ?> ;
 
+            let global_data = <?php echo Get_Global(); ?> ;
+             document.getElementById('cases').innerHTML = global_data.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+             document.getElementById('deaths').innerHTML = global_data.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+             document.getElementById('recovered').innerHTML = global_data.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+             document.getElementById('active').innerHTML = global_data.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+
             let totalConfirmed = 0;
             let totalDeath = 0;
             let totalRecovered = 0;
@@ -139,7 +169,7 @@
                             <div class="areaName" title="${name.country}">
                             <img src="${name.countryInfo.flag}" style="width:30px; height: 30px; border-radius: 50%;"><span>${name.country}</span></div>
                             <div class="areaTotal">
-                                <div class="secondaryInfo">${name.cases}</div>
+                                <div class="secondaryInfo">${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                             </div>
                 
                     </div>
@@ -219,11 +249,11 @@
                     "stationName": row.countryInfo.iso2,
                     "popupContent": `<table>
                             <tr><td width="50px"><img style="width: 50px; height: 50px; border-radius: 50%" src="${row.countryInfo.flag}"></td><td><h1>${row.country.toUpperCase()}</h1></td></tr>
-                            <tr><td><h2>Cases:</h2> </td><td><h2>${row.cases}</h2></td></tr>
-                            <tr><td><h2>Deaths: </h2></td><td><h2>${row.deaths}</h2></td></tr>
-                            <tr><td><h2>Recovered: </h2></td><td><h2>${row.recovered}</h2></td></tr>
-                            <tr><td><h2>Active: </h2></td><td><h2>${row.active}</h2></td></tr>
-                            <tr><td><h2>Critical: </h2></td><td><h2>${row.critical}</h2></td></tr>`
+                            <tr><td><h2>Cases:</h2> </td><td><h2>${row.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
+                            <tr><td><h2>Deaths: </h2></td><td><h2>${row.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
+                            <tr><td><h2>Recovered: </h2></td><td><h2>${row.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
+                            <tr><td><h2>Active: </h2></td><td><h2>${row.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
+                            <tr><td><h2>Critical: </h2></td><td><h2>${row.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>`
                     }
                     })
 
