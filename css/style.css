@@ -52,7 +52,7 @@ h6 {
   font-weight: 600;
 }
 .legend .total {
-  color: #767676;
+  color: #DE3700;
   display: flex;
   align-items: center;
 }
@@ -203,7 +203,7 @@ h6 {
 }
 
 .area .areaTotal {
-  color: #767676;
+  color: #DE3700;
 }
 
 
@@ -410,7 +410,70 @@ h6 {
  
 
 }
-
+.titleInfoBox {
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 18px;
+ 
+  color: #000000;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+}
+.titleInfoBox span{
+   text-align: center;
+   padding-left: 10px;
+}
+.statLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  min-width: 160px;
+}
+.stat {
+  flex: 1;
+  margin-right: 24px;
+  height: 20px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #333333;
+}
+.legendColor {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+.ongoing {
+  background-color: #F4C363;
+}
+.legendColor.recovered {
+  background-color: #60BB69;
+}
+.fatal {
+  background-color: #DE3700;
+}
+.stat.total {
+  color: #DE3700;
+}
+.statCount.total {
+  color: #DE3700;
+}
+.statLine.divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+  margin: 5px 0 4px 0;
+}
+.statLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  min-width: 160px;
+}
 
 #txtSearch {
   background-image: url('../img/searchicon.png');

@@ -46,7 +46,7 @@
                         <div id="recovered" class="total">225,422</div>
                     </h2>
                         <h2 class="legend">
-                            <div class="color" style="background: rgb(118, 118, 118);"></div>
+                            <div class="color" style="background: #DE3700;"></div>
                             <div class="description">Fatal cases</div>
                             <div id="deaths" class="total">58,243</div>
                     </h2>
@@ -247,15 +247,37 @@
                     },
                     "properties": {
                     "stationName": row.countryInfo.iso2,
-                    "popupContent": `<table>
-                            <tr><td width="50px"><img style="width: 50px; height: 50px; border-radius: 50%" src="${row.countryInfo.flag}"></td><td><h1>${row.country.toUpperCase()}</h1></td></tr>
-                            <tr><td><h2>Cases:</h2> </td><td><h2>${row.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
-                            <tr><td><h2>Deaths: </h2></td><td><h2>${row.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
-                            <tr><td><h2>Recovered: </h2></td><td><h2>${row.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
-                            <tr><td><h2>Active: </h2></td><td><h2>${row.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>
-                            <tr><td><h2>Critical: </h2></td><td><h2>${row.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h2></td></tr>`
+                    "popupContent":`
+                        <div class="titleInfoBox">
+                        <img style="width: 50px; height: 50px; border-radius: 50%" src="${row.countryInfo.flag}">
+                        <span>${row.country.toUpperCase()}</span>
+                        </div>
+                        <div class="statLine">
+                          <div class="stat total">Total cases</div>
+                          <div class="statCount total">${row.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>
+                        <div class="statLine divider"></div>
+                        
+                        <div class="statLine">
+                          <div class="legendColor ongoing"></div>
+                          <div class="stat total">Active</div>
+                          <div class="statCount total">${row.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>
+                        <div class="statLine">
+                          <div class="legendColor recovered"></div>
+                          <div class="stat total">Recovered</div>
+                          <div class="statCount total">${row.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>
+                        <div class="statLine">
+                          <div class="legendColor fatal"></div>
+                          <div class="stat total">Death</div>
+                          <div class="statCount total">${row.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>`
                     }
-                    })
+
+                   
+                    
+                })
 
 
             })
