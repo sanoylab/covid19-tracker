@@ -11,13 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Roboto&display=swap" rel="stylesheet">
 
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-  crossorigin=""/>
+     
 
-  <!-- Esri Leaflet Geocoder -->
-  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css">
-    <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/style.css">
@@ -69,6 +65,7 @@
                     </h2>
                 </div>
             </div>
+            <input type="text" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">
         <table id="country_list-table" class="table table-hover table-striped table-bordered">
                 <tr>
                     <th>Country, Other</th>
@@ -197,8 +194,8 @@
                 <td>${name.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 <td>${name.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 <td>${name.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td>${name.casesPerOneMillion.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td>${name.deathsPerOneMillion.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>${name.casesPerOneMillion ==null?"": name.casesPerOneMillion}</td>
+                <td>${name.deathsPerOneMillion== null? "": name.deathsPerOneMillion}</td>
                
                 
                 </tr>`);
@@ -230,7 +227,7 @@
             let countryTitle = document.getElementById('countryName');
             let countryDeaths = document.getElementById('death') ;
             let countryRecovered = document.getElementById('recovered') ;
-            covidMap(countries_data, lat, long,5);
+           
            countryTitle.textContent = countryName;
             countryDeaths.textContent = death;
             countryRecovered.textContent = recover ;
@@ -298,10 +295,10 @@ function searhTable() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("txtSearch");
   filter = input.value.toUpperCase();
-  table = document.getElementById("country_list");
+  table = document.getElementById("country_list-table");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
+    td = tr[i].getElementsByTagName("td")[0];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
