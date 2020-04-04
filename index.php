@@ -195,7 +195,7 @@
          //   document.getElementById('recovered').innerHTML = parseInt(totalRecovered);
        //     summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
     
-            covidMap(countries_data, 42.8333, 12.8333);
+            covidMap(countries_data, 42.8333, 12.8333,4);
         });
 
         function CountryDetail(countryName, death, recover, active_cases, lat, long) {
@@ -203,12 +203,12 @@
             let countryTitle = document.getElementById('countryName');
             let countryDeaths = document.getElementById('death') ;
             let countryRecovered = document.getElementById('recovered') ;
-            covidMap(countries_data, lat, long);
+            covidMap(countries_data, lat, long,6);
            countryTitle.textContent = countryName;
             countryDeaths.textContent = death;
             countryRecovered.textContent = recover ;
             summaryChart(active_cases.replace(/\,/g,''), death.replace(/\,/g,''), recover.toString().replace(/\,/g,''), countryName );
-            summaryTable(active_cases, death, recover, countryName );
+            summaryTable(active_cases, death, recover, countryName, 6 );
            
 
         }
@@ -223,7 +223,7 @@
                 layer.bindPopup(feature.properties.popupContent);
             }
         }
-        function covidMap(data, lat, long){
+        function covidMap(data, lat, long,zoom){
             document.getElementById('covid19-map').innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
             var geojson = {
                 type: "FeatureCollection",
@@ -285,7 +285,7 @@
    
             var mapboxAccessToken = "pk.eyJ1IjoiZXhwZXJ0c2Fub3kiLCJhIjoiY2s4OWNwZXkzMDVuZDNldnU3Y3N0N3IxcyJ9.B28AhJkQznwv8poyiLqz3A";
             var map = new L.Map('mapid');
-            map.setView(new L.LatLng(lat,long), 4 );
+            map.setView(new L.LatLng(lat,long), zoom);
   
             
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
@@ -295,7 +295,7 @@
                 zoomOffset: -1
             }).addTo(map);
             map.on('mouseover',function(ev) {
-     console.log('yyyyyyyyy')
+     
     })
             L.geoJson(geojson, { onEachFeature: onEachFeature, pointToLayer: function (feature, latlng) {
                 
