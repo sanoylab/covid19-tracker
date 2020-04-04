@@ -286,6 +286,13 @@
             var mapboxAccessToken = "pk.eyJ1IjoiZXhwZXJ0c2Fub3kiLCJhIjoiY2s4OWNwZXkzMDVuZDNldnU3Y3N0N3IxcyJ9.B28AhJkQznwv8poyiLqz3A";
             var map = new L.Map('mapid');
             map.setView(new L.LatLng(lat,long), zoom);
+            map.flyTo(new L.LatLng(lat,long), zoom+1, {
+        animate: true,
+        duration: 1,
+        easeLinearity: 1 ,
+        noMoveStart	: false
+
+    });
   
             
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
