@@ -72,7 +72,7 @@
      </div>
         <div class="map">
 
-         <div id="covid19-map" style="width: 100%; height: 100vh;"></div>
+         <div id="covid19-map" style="width: 100%; "></div>
         </div>
         
     </div>
