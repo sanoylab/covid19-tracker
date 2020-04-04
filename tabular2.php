@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,71 +8,42 @@
     <link rel="icon" 
       type="image/png" 
       href="img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Roboto&display=swap" rel="stylesheet">
+
+
+     
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/c3.css">
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+      .map{
+        width: 70%;
+        margin: 0 auto;
       }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+      .infoTile{
+        border: 1px solid #dee2e6;
+        margin: 10px 0px;
       }
-
-      
-.legend .description {
-  font-weight: 600;
-}
-.legend .total {
-  color: #DE3700;
-  display: flex;
-  align-items: center;
-}
-.infoTile .title {
-  margin-bottom: 0px;
-  font-size: 16px;
-  line-height: 22px;
-}
-.infoTile{
-  margin-bottom: 10px;
-  border: 1px solid #dee2e6;
-  padding: 2rem 1rem;
-}
-.infoTile .confirmed {
-  font-size: 32px;
-  color: #DE3700;
-  font-weight: bold;
-  line-height: 40px;
-}
-.legend {
-  display: grid;
-  padding-top: 16px;
-  grid-template-columns: 8px auto min-content;
-  align-items: center;
-  grid-gap: 16px 8px;
-  font-size: 13px;
-  line-height: 20px;
-}
-.legend .color {
-  width: 8px;
-  height: 8px;
-  border-radius: 8px;
-}
-    </style>
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      </style>
 
 </head>
-<body class="bg-light">
-    <div class="container">
-  <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="img/favicon.png" alt="" width="72" height="72">
-    <h2>Covid-19 Tracker</h2>
-    <div class="infoTile"  style="width: 272px;">
+
+<body>
+  
+   <div class="container">
+        <div class="map">
+        <nav class="header">
+           <h1>COVID-19 Tracker</h1>
+         </nav>
+            <div class="country-list-content">
+            <ul class="view">
+                    <li><a id="interactive-btn" href="index.php">Interactive View</a></li>
+                 
+                </ul>
+                <div class="infoTile" style="width: 272px;">
                 <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
              
                 <div id="cases" class="confirmed"></div>
@@ -92,18 +64,9 @@
                             <div id="deaths" class="total">58,243</div>
                     </h2>
                 </div>
-  </div>
-
-  <div class="row">
-    
-    <div class="col-md-12 order-md-1">
-
-             
-
-
-
-    <input type="text" class="form-control" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">
-       <br> <table id="country_list-table" class="table table-hover table-striped table-bordered">
+            </div>
+            <input type="text" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">
+        <table id="country_list-table" class="table table-hover table-striped table-bordered">
                 <tr>
                     <th>Country, Other</th>
                     <th>Total Cases</th>
@@ -119,12 +82,12 @@
                 <tr>
 
             </table>
-      
+        
+        </div>
+        
     </div>
-  </div>
 
-
-</div>
+    </div>
 <?php
     
     
@@ -345,7 +308,7 @@ function searhTable() {
   }
 }
 </script>
-    
-    
-    </body>
+
+</body>
+
 </html>
