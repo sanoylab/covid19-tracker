@@ -25,12 +25,12 @@
 </head>
 
 <body>
-    <nav class="header">
-       <h1>COVID-19 Tracker</h1>
-    </nav>
+   
     <div class="container">
         <div class="country-list">
-            <div class="country-list-bg"></div>
+        <nav class="header">
+       <h1>COVID-19 Tracker</h1>
+    </nav>
             <div class="country-list-content">
                
                 <div class="infoTile" style="width: 272px;">
