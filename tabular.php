@@ -190,15 +190,15 @@
                 $('#country_list-table').append(`
                 <tr style="cursor:pointer">
                 <td>${name.country}</td>
-                <td>${name.cases}</td>
-                <td ${checkColor(name.todayCases,"c")}>${Number(name.todayCases)>0?"+"+name.todayCases:""}</td>
-                <td>${name.deaths}</td>
-                <td ${checkColor(name.todayDeaths,"d")}>${Number(name.todayDeaths)>0?"+"+name.todayDeaths:""}</td>
-                <td>${name.recovered}</td>
-                <td>${name.active}</td>
-                <td>${name.critical}</td>
-                <td>${name.casesPerOneMillion}</td>
-                <td>${name.deathsPerOneMillion}</td>
+                <td>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td ${checkColor(name.todayCases,"c")}>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</td>
+                <td>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td ${checkColor(name.todayDeaths,"d")}>${Number(name.todayDeaths)>0?"+"+name.todayDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</td>
+                <td>${name.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>${name.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>${name.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>${name.casesPerOneMillion.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                <td>${name.deathsPerOneMillion.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                
                 
                 </tr>`);
