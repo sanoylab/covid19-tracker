@@ -292,6 +292,23 @@
                           <div class="legendColor fatal"></div>
                           <div class="stat total">Death</div>
                           <div class="statCount total">${row.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>
+                        <div class="statLine divider"></div>
+                        <div class="statLine">
+                          <div class="legendColor ongoing"></div>
+                          <div class="stat total">New cases</div>
+                          <div class="statCount total">+${row.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>
+                        <div class="statLine">
+                          <div class="legendColor fatal"></div>
+                          <div class="stat total">New death</div>
+                          <div class="statCount total">+${row.todayDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                        </div>
+                        <div class="statLine divider"></div>
+                        <div class="statLine">
+                          <div class="legendColor recovered"></div>
+                          <div class="stat total">Total tests</div>
+                          <div class="statCount total">${row.tests.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                         </div>`
                     }
 
@@ -360,7 +377,7 @@
             
     </script>
      <script>
-      function summaryChart(active, death, recovered,title){
+      function summaryChart(active, death, recovered,title, dom){
 console.log('yonas', active, death, recovered, title);
 
        

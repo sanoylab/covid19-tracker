@@ -8,6 +8,10 @@
       type="image/png" 
       href="img/favicon.png">
     <style>
+    .summary{
+      display: flex;
+      justify-content: center;
+    }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -39,7 +43,7 @@
 }
 .infoTile{
   margin: 15px 0px;
-  border: 1px solid #dee2e6;
+ 
   padding: 2rem 1rem;
 }
 .infoTile .confirmed {
@@ -76,25 +80,26 @@ th {
 <body class="bg-light">
     <div class="container">
   <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="img/favicon.png" alt="" width="72" height="72">
+ <a href="index.php">Go back to interactive view</a>
     <h2>Covid-19 Tracker</h2>
+    <div class="summary row">
+    <div class="infoTile col-md-3 col-sm-12"  >
+                <h2 class="title" title="Total Confirmed Cases">Coronavirus Cases:</h2>             
+                <div id="cases" class="confirmed" style="color:#aaa"></div><br>
+                <h2 class="title" title="Total Confirmed Cases">Active Cases</h2> 
+                <div id="active" class="confirmed" style="color: rgb(244, 195, 99)">799,419</div><br>
+                <h2 class="title" title="Total Confirmed Cases">Recovered Cases</h2> 
+                <div id="recovered" class="confirmed" style="color: green;">225,422</div><br>
+                <h2 class="title" title="Total Confirmed Cases">Death</h2> 
+                <div id="deaths" class="confirmed">58,243</div>
+                
+        </div>
+  <div>
+        
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tabular View</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Global Summary</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"   href="index.php" role="tab" aria-controls="profile" aria-selected="false">Go back to Interactive</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-      <div class="row" style="padding-top: 15px;">
+  <div class="row" style="padding-top: 15px;">
     
-    <div class="col-md-12 col-sm-12 order-md-1">
+    <div class="col-md-12 col-sm-12 ">
 
              
 
@@ -113,6 +118,8 @@ th {
                     <th>Serious, Critical Cases</th>
                     <th>Tot Cases/ 1M pop</th>
                     <th>Deaths/ 1M pop</th>
+                    <th>Total Tests</th>
+                    <th>Tests/ 1M pop</th>
                    
                 <tr>
 
@@ -120,39 +127,6 @@ th {
       
     </div>
   </div>
-
-      </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-<div class="row">
-      <div class="infoTile col-md-4 col-sm-12"  >
-                <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
-             
-                <div id="cases" class="confirmed"></div>
-                <div class="infoTileData">
-                    <h2 class="legend">
-                        <div class="color" style="background: rgb(244, 195, 99);"></div>
-                        <div class="description">Active cases</div>
-                        <div id="active" class="total">799,419</div>
-                    </h2>
-                    <h2 class="legend">
-                        <div class="color" style="background: rgb(96, 187, 105);"></div>
-                        <div class="description">Recovered cases</div>
-                        <div id="recovered" class="total">225,422</div>
-                    </h2>
-                        <h2 class="legend">
-                            <div class="color" style="background: #DE3700;"></div>
-                            <div class="description">Fatal cases</div>
-                            <div id="deaths" class="total">58,243</div>
-                    </h2>
-                </div>
-        </div>
-        <div class="col-md-4">
-        <div id="donut"></div>
-        </div>
-</div>
-      </div>
-      
-    </div>
 
 
 
@@ -260,17 +234,18 @@ th {
 
                 $('#country_list-table').append(`
                 <tr style="cursor:pointer">
-                <td>${name.country}</td>
-                <td>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td ${checkColor(name.todayCases,"c")}>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</td>
-                <td>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td ${checkColor(name.todayDeaths,"d")}>${Number(name.todayDeaths)>0?"+"+name.todayDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</td>
-                <td>${name.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td>${name.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td>${name.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                <td>${name.casesPerOneMillion ==null?"": name.casesPerOneMillion}</td>
-                <td>${name.deathsPerOneMillion== null? "": name.deathsPerOneMillion}</td>
-               
+                <td style="text-align:left; color:#337ab7"><img style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> <b>${name.country}</b></td>
+                <td><b>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                <td ${checkColor(name.todayCases,"c")}><b>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
+                <td><b>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                <td ${checkColor(name.todayDeaths,"d")}><b>${Number(name.todayDeaths)>0?"+"+name.todayDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
+                <td><b>${name.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                <td><b>${name.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                <td><b>${name.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                <td><b>${name.casesPerOneMillion ==null?"": name.casesPerOneMillion}</b></td>
+                <td><b>${name.deathsPerOneMillion== null? "": name.deathsPerOneMillion}</b></td>
+                <td><b>${name.tests.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                <td><b>${name.testsPerOneMillion ==null?"": name.casesPerOneMillion}</b></td>
                 
                 </tr>`);
      
@@ -343,7 +318,7 @@ th {
     donut: {
       label: {
                                 format: function (value, ratio, id) {
-                                    return value;
+                                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                 }
                             },
         title: title
