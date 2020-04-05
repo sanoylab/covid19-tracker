@@ -82,8 +82,8 @@ th {
   <div class="py-5 text-center">
  <a href="index.php">Go back to interactive view</a>
     <h2>Covid-19 Tracker</h2>
-    <div class="summary row">
-    <div class="infoTile col-md-3 col-sm-12"  >
+    <div class="row" >
+    <div class="infoTile col-md-3 col-sm-12" style="margin: 0 auto;" >
                 <h2 class="title" title="Total Confirmed Cases">Coronavirus Cases:</h2>             
                 <div id="cases" class="confirmed" style="color:#aaa"></div><br>
                 <h2 class="title" title="Total Confirmed Cases">Active Cases</h2> 
@@ -99,7 +99,7 @@ th {
 
   <div class="row" style="padding-top: 15px;">
     
-    <div class="col-md-12 col-sm-12 ">
+    <div class="col-md-12 col-sm-12 order-md-1">
 
              
 
@@ -234,7 +234,7 @@ th {
 
                 $('#country_list-table').append(`
                 <tr style="cursor:pointer">
-                <td style="text-align:left; color:#337ab7"><img style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> <b>${name.country}</b></td>
+                <td style="text-align:left; color:#337ab7"><img class="img-responsive" style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> <b>${name.country}</b></td>
                 <td><b>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
                 <td ${checkColor(name.todayCases,"c")}><b>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
                 <td><b>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
