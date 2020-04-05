@@ -45,6 +45,8 @@
   margin: 15px 0px;
  
   padding: 2rem 1rem;
+
+  margin: 0 auto;
 }
 .infoTile .confirmed {
   font-size: 32px;
@@ -75,6 +77,13 @@ th {
 @media only screen and (max-width: 600px) {
 .flag{display:none;}
 }
+
+#flag{
+  width: 50px;
+  height: 50px;;
+  border-radius: 50%;
+  margin-right: 15px;
+}
     </style>
      <link rel="stylesheet" href="css/c3.css">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -85,8 +94,8 @@ th {
   <div class="py-12 text-center">
  <a href="index.php">Go back to interactive view</a>
     <h2>Covid-19 Tracker</h2>
-    <div class="row" style="width:100%">
-    <div class="infoTile col-md-3 col-sm-12" style="margin: 0 auto;" >
+    <div class="row">
+    <div class="infoTile" >
                 <h2 class="title" title="Total Confirmed Cases">Coronavirus Cases:</h2>             
                 <div id="cases" class="confirmed" style="color:#aaa"></div><br>
                 <h2 class="title" title="Total Confirmed Cases">Active Cases</h2> 
@@ -138,6 +147,44 @@ th {
 
 
 
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="detailView" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">  <img src="" id="flag" /><h1 id="country-detail"></h1></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <h1 id="country-detail"><h1>
+      <div class="infoTile" >
+    
+                <h2 class="title" title="Total Confirmed Cases">Coronavirus Cases:</h2>             
+                <div id="totalCase-detail" class="confirmed" style="color:#aaa"></div><br>
+                <h2 class="title" title="Total Confirmed Cases">Active Cases</h2> 
+                <div id="active-detail" class="confirmed" style="color: rgb(244, 195, 99)">799,419</div><br>
+                <h2 class="title" title="Total Confirmed Cases">Recovered Cases</h2> 
+                <div id="recovered-detail" class="confirmed" style="color: green;">225,422</div><br>
+                <h2 class="title" title="Total Confirmed Cases">Death</h2> 
+                <div id="death-detail" class="confirmed">58,243</div><br>
+                <h2 class="title" title="Total Confirmed Cases">New Cases</h2> 
+                <div id="newCase-detail" class="confirmed"  style="color:#aaa">58,243</div><br>
+                <h2 class="title" title="Total Confirmed Cases">New Death</h2> 
+                <div id="newDeath-detail" class="confirmed">58,243</div><br>
+                <h2 class="title" title="Total Confirmed Cases">Total Test</h2> 
+                <div id="totalTest-detail" class="confirmed"  style="color:#aaa">58,243</div>
+                
+        </div>
+            
+
+      </div>
+     
+    </div>
+  </div>
 </div>
 <?php
     
@@ -237,7 +284,9 @@ th {
 
                 $('#country_list-table').append(`
                 <tr style="cursor:pointer">
-                <td style="text-align:left; color:#337ab7"><img class="img-responsive flag" style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> <b>${name.country}</b></td>
+                <td style="text-align:left; color:#337ab7"><img class="img-responsive flag" style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> 
+                
+                <b><a onClick="return CountryDetail('${name.countryInfo.flag}','${name.country}','${name.cases}','${name.active}','${name.recovered}','${name.deaths}','${name.todayCases}','${name.todayDeaths}','${name.tests}')">${name.country}</a></b></td>
                 <td><b>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
                 <td ${checkColor(name.todayCases,"c")}><b>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
                 <td><b>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
@@ -274,18 +323,32 @@ th {
            
         });
 
-        function CountryDetail(countryName, death, recover, active_cases, lat, long) {
-            let countries_data = <?php echo all_country_list(); ?> ;
-            let countryTitle = document.getElementById('countryName');
-            let countryDeaths = document.getElementById('death') ;
-            let countryRecovered = document.getElementById('recovered') ;
+        function CountryDetail(flag, country, totalCase, active, recovered, death, newCase, newDeath, totalTest) {
+
+          $('#detailView').modal('toggle');
+
+          document.getElementById("flag").src = flag;
+
            
-           countryTitle.textContent = countryName;
-            countryDeaths.textContent = death;
-            countryRecovered.textContent = recover ;
-            summaryChart(active_cases.replace(/\,/g,''), death.replace(/\,/g,''), recover.toString().replace(/\,/g,''), countryName );
-            summaryTable(active_cases, death, recover, countryName, 6 );
+            let countryDetail = document.getElementById('country-detail');
+            let totalCaseDetail = document.getElementById('totalCase-detail') ;
+            let activeDetail = document.getElementById('active-detail') ;
+            let recoveredDetail = document.getElementById('recovered-detail') ;
+            let deathDetail = document.getElementById('death-detail') ;
+            let newCaseDetail = document.getElementById('newCase-detail') ;
+            let newDeathDetail = document.getElementById('newDeath-detail') ;
+            let totalTestDetail = document.getElementById('totalTest-detail') ;
            
+            countryDetail.textContent = country;
+            totalCaseDetail.textContent = totalCase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            activeDetail.textContent = active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+            recoveredDetail.textContent = recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+            deathDetail.textContent = death.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+            newCaseDetail.textContent = "+"+newCase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+            newDeathDetail.textContent = "+"+newDeath.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+            totalTestDetail.textContent = totalTest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+          
+                      
 
         }
         function onEachFeature(feature, layer) {
