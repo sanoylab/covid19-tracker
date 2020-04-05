@@ -57,9 +57,9 @@
     <div  class="container"><nav class="header">
         <img class="d-block mx-auto mb-4" src="img/favicon.png" alt="" width="42" height="42"><h1>COVID-19 Tracker</h1>
          </nav>
-        <div class="country-list">
+        <div class="country-list info">
         
-            <div class="country-list-content info">
+            <div class="country-list-content">
                
                 <div class="infoTile " style="width: 272px;">
                 <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
