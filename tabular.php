@@ -156,7 +156,7 @@ th {
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">  <img src="" id="flag" /><h1 id="country-detail"></h1></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" style="font-size: 47px;">&times;</span>
         </button>
       </div>
       <div class="modal-body">
