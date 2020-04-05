@@ -61,7 +61,7 @@
         
             <div class="country-list-content">
                
-                <div class="infoTile" style="width: 272px;">
+                <div class="infoTile info" style="width: 272px;">
                 <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
              
                 <div id="cases" class="confirmed"></div>
