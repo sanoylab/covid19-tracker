@@ -79,10 +79,10 @@ th {
 </head>
 <body class="bg-light">
     <div class="container">
-  <div class="py-5 text-center">
+  <div class="py-12 text-center">
  <a href="index.php">Go back to interactive view</a>
     <h2>Covid-19 Tracker</h2>
-    <div class="row" >
+    <div class="row" style="width:100%">
     <div class="infoTile col-md-3 col-sm-12" style="margin: 0 auto;" >
                 <h2 class="title" title="Total Confirmed Cases">Coronavirus Cases:</h2>             
                 <div id="cases" class="confirmed" style="color:#aaa"></div><br>
