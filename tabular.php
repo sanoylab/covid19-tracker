@@ -72,6 +72,9 @@ th {
   top: -1px;
   background: white;
 }
+@media only screen and (max-width: 600px) {
+.flag{display:none;}
+}
     </style>
      <link rel="stylesheet" href="css/c3.css">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -234,7 +237,7 @@ th {
 
                 $('#country_list-table').append(`
                 <tr style="cursor:pointer">
-                <td style="text-align:left; color:#337ab7"><img class="img-responsive" style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> <b>${name.country}</b></td>
+                <td style="text-align:left; color:#337ab7"><img class="img-responsive flag" style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> <b>${name.country}</b></td>
                 <td><b>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
                 <td ${checkColor(name.todayCases,"c")}><b>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
                 <td><b>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
