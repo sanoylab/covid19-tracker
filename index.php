@@ -26,11 +26,11 @@
 
 <body>
   
-    <div  class="container">
-        <div class="country-list">
-        <nav class="header">
-           <h1>COVID-19 Tracker</h1>
+    <div  class="container"><nav class="header">
+        <img class="d-block mx-auto mb-4" src="img/favicon.png" alt="" width="42" height="42"><h1>COVID-19 Tracker</h1>
          </nav>
+        <div class="country-list">
+        
             <div class="country-list-content">
                 <ul class="view">
                     
@@ -83,7 +83,7 @@
       $curl = curl_init();
 
       curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://corona.lmao.ninja/countries",
+        CURLOPT_URL => "https://corona.lmao.ninja/countries?sort=cases",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_ENCODING => "",
@@ -215,7 +215,7 @@
          //   document.getElementById('recovered').innerHTML = parseInt(totalRecovered);
        //     summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
     
-            covidMap(countries_data, 42.8333, 12.8333,4);
+            covidMap(countries_data, 38, -97,4);
         });
 
         function CountryDetail(countryName, death, recover, active_cases, lat, long) {

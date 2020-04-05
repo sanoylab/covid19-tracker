@@ -20,11 +20,18 @@ h6 {
 }
 .header{
   display: flex;
-  justify-content: space-between;
-  padding: 12px 24px;
+  justify-content: center;
+  min-height: 60px;
   border-bottom: 1px solid #DDD;
+  align-items: center;
+  position:fixed;
+  margin-bottom: 50px;
+  background: #f8f9fa;
+ width: 380px;
 
-
+}
+.header img{
+  margin-right: 20px;
 }
 .container{
     display: flex;
@@ -34,7 +41,7 @@ h6 {
 .country-list{
     flex: 1;
     height: 100vh;
- 
+ margin-top: 60px;
    overflow: auto;
     background: #fff;
     
@@ -213,7 +220,7 @@ h6 {
   width: 50%;
   padding: 5px;
   float: right;
-  margin-bottom: 10px;
+  margin-bottom: 31px;
   
 }
 #tabular-btn, #interactive-btn{
@@ -254,7 +261,13 @@ h6 {
    display:none;
   }
 
- 
+ .donut-tabular{
+   display:none;
+ }
+ .view{
+
+   margin-bottom: 10px;
+ }
 
 }
 .titleInfoBox {
@@ -331,5 +344,5 @@ h6 {
   padding: 12px 20px 12px 40px;
   border: 1px solid #ddd;
   margin-bottom: 12px;
-  margin-top: 25px;
+  margin-top: 1px;
 }

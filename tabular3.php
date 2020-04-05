@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,42 +7,124 @@
     <link rel="icon" 
       type="image/png" 
       href="img/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Roboto&display=swap" rel="stylesheet">
-
-
-     
-
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/c3.css">
     <style>
-      .map{
-        width: 70%;
-        margin: 0 auto;
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
-      .infoTile{
-        border: 1px solid #dee2e6;
-        margin: 10px 0px;
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
       }
-      </style>
+
+      
+.legend .description {
+  font-weight: 600;
+}
+.legend .total {
+  color: #DE3700;
+  display: flex;
+  align-items: center;
+}
+.infoTile .title {
+  margin-bottom: 0px;
+  font-size: 16px;
+  line-height: 22px;
+}
+.infoTile{
+  margin: 15px 0px;
+  border: 1px solid #dee2e6;
+  padding: 2rem 1rem;
+}
+.infoTile .confirmed {
+  font-size: 32px;
+  color: #DE3700;
+  font-weight: bold;
+  line-height: 40px;
+}
+.legend {
+  display: grid;
+  padding-top: 16px;
+  grid-template-columns: 8px auto min-content;
+  align-items: center;
+  grid-gap: 16px 8px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.legend .color {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+th {
+  position: sticky;
+  top: -1px;
+  background: white;
+}
+    </style>
+     <link rel="stylesheet" href="css/c3.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 </head>
+<body class="bg-light">
+    <div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="img/favicon.png" alt="" width="72" height="72">
+    <h2>Covid-19 Tracker</h2>
 
-<body>
-  
-   <div class="container">
-        <div class="map">
-        <nav class="header">
-           <h1>COVID-19 Tracker</h1>
-         </nav>
-            <div class="country-list-content">
-            <ul class="view">
-                    <li><a id="interactive-btn" href="index.php">Interactive View</a></li>
-                 
-                </ul>
-                <div class="infoTile" style="width: 272px;">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tabular View</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Global Summary</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"   href="index.php" role="tab" aria-controls="profile" aria-selected="false">Go back to Interactive</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="row" style="padding-top: 15px;">
+    
+    <div class="col-md-12 col-sm-12 order-md-1">
+
+             
+
+
+
+    <input type="text" class="form-control" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">
+       <br> <table data-sticky-header="true" data-sticky-header-offset-y="60" id="country_list-table" class="table table-hover sticky-header table-striped table-bordered">
+                <tr>
+                    <th>Country, Other</th>
+                    <th>Total Cases</th>
+                    <th>New Cases</th>
+                    <th>Total Deaths</th>
+                    <th>New Deths</th>
+                    <th>Total Recovered</th>
+                    <th>Active Cases</th>
+                    <th>Serious, Critical Cases</th>
+                    <th>Tot Cases/ 1M pop</th>
+                    <th>Deaths/ 1M pop</th>
+                   
+                <tr>
+
+            </table>
+      
+    </div>
+  </div>
+
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+<div class="row">
+      <div class="infoTile col-md-4 col-sm-12"  >
                 <h2 class="title" title="Total Confirmed Cases">Total Confirmed Cases</h2>
              
                 <div id="cases" class="confirmed"></div>
@@ -64,30 +145,23 @@
                             <div id="deaths" class="total">58,243</div>
                     </h2>
                 </div>
-            </div>
-            <input type="text" id="txtSearch" onkeyup="searhTable()" placeholder="Filter country" title="Type in a country name">
-        <table id="country_list-table" class="table table-hover table-striped table-bordered">
-                <tr>
-                    <th>Country, Other</th>
-                    <th>Total Cases</th>
-                    <th>New Cases</th>
-                    <th>Total Deaths</th>
-                    <th>New Deths</th>
-                    <th>Total Recovered</th>
-                    <th>Active Cases</th>
-                    <th>Serious, Critical Cases</th>
-                    <th>Tot Cases/ 1M pop</th>
-                    <th>Deaths/ 1M pop</th>
-                   
-                <tr>
-
-            </table>
-        
         </div>
-        
+        <div class="col-md-4">
+        <div id="donut"></div>
+        </div>
+</div>
+      </div>
+      
     </div>
 
-    </div>
+
+
+   
+
+
+
+
+</div>
 <?php
     
     
@@ -95,7 +169,7 @@
       $curl = curl_init();
 
       curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://corona.lmao.ninja/countries",
+        CURLOPT_URL => "https://corona.lmao.ninja/countries?sort=cases",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_ENCODING => "",
@@ -146,7 +220,9 @@
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script src="js/d3.min.js"></script>
 
-    
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
 
@@ -215,7 +291,7 @@
           //  document.getElementById('countryName').innerHTML = "Global";//+totalConfirmed;
         //    document.getElementById('death').innerHTML = totalDeath;
          //   document.getElementById('recovered').innerHTML = parseInt(totalRecovered);
-       //     summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
+            summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
     
            
         });
@@ -308,7 +384,7 @@ function searhTable() {
   }
 }
 </script>
-
-</body>
-
+    
+    
+    </body>
 </html>
