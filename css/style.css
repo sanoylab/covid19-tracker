@@ -218,9 +218,9 @@ h6 {
   display: flex;
   justify-content: space-between;
   width: 50%;
-  padding: 5px;
-  float: right;
-  margin-bottom: 31px;
+  
+  padding: 5px 30px;
+  margin-bottom: 10px;
   
 }
 #tabular-btn, #interactive-btn{
