@@ -20,7 +20,7 @@ h6 {
 }
 .header{
   display: flex;
-  justify-content: center;
+padding-left: 15px;
   min-height: 60px;
   border-bottom: 1px solid #DDD;
   align-items: center;
