@@ -21,6 +21,7 @@
 </head>
 
 <body>  
+<?php header('Location: /index.html'); exit; ?>
     <div  class="container"><nav class="header">
         <img class="d-block mx-auto mb-4" src="img/favicon.png" alt="" width="42" height="42"><h1>COVID-19 Tracker</h1>
          </nav>
