@@ -92,7 +92,7 @@ th {
 <body class="bg-light">
     <div class="container">
   <div class="py-12 text-center">
- <a href="index.php">Go back to interactive view</a>
+ <a href="index.html">Go back to interactive view</a>
     <h2>Covid-19 Tracker</h2>
     <div class="row">
     <div class="infoTile" >
