@@ -183,9 +183,47 @@
                 </div>
 
 
-                <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                    crossorigin="anonymous"></script>
+                let apiCountryData = async () => {
+                    let response = await fetch(
+                        'https://corona.lmao.ninja/countries?sort=cases'); //api end point
+                    return response.json();
+                }
+
+                apiCountryData().then(
+                    (res) => {
+                        let countries_data = res;
+                        let totalConfirmed = 0;
+                        let totalDeath = 0;
+                        let totalRecovered = 0;
+                        let totalActive = 0;
+                        countries_data.forEach(function (name) {
+
+                        $('#country_list-table').append(`
+                        <tr style="cursor:pointer">
+                        <td style="text-align:left; color:#337ab7"><img class="img-responsive flag" style="width: 30px; height: 30px; border-radius: 50%" src="${name.countryInfo.flag}"> 
+                        
+                        <b><a onClick="return CountryDetail('${name.countryInfo.flag}','${name.country}','${name.cases}','${name.active}','${name.recovered}','${name.deaths}','${name.todayCases}','${name.todayDeaths}','${name.tests}')">${name.country}</a></b></td>
+                        <td><b>${name.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                        <td ${checkColor(name.todayCases,"c")}><b>${Number(name.todayCases)>0?"+"+name.todayCases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
+                        <td><b>${name.deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                        <td ${checkColor(name.todayDeaths,"d")}><b>${Number(name.todayDeaths)>0?"+"+name.todayDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):""}</b></td>
+                        <td><b>${name.recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                        <td><b>${name.active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                        <td><b>${name.critical.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                        <td><b>${name.casesPerOneMillion ==null?"": name.casesPerOneMillion}</b></td>
+                        <td><b>${name.deathsPerOneMillion== null? "": name.deathsPerOneMillion}</b></td>
+                        <td><b>${name.tests.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</b></td>
+                        <td><b>${name.testsPerOneMillion ==null?"": name.casesPerOneMillion}</b></td>
+                        
+                        </tr>`);
+
+                         totalConfirmed += parseInt(name.cases);
+                         totalDeath += parseInt(name.deaths);
+                         totalActive += parseInt(name.active)
+                         totalRecovered += parseInt(name.recovered);
+                        });
+                        summaryChart(totalActive, totalDeath, totalRecovered, 'Global Summary')
+                    }).catch()
                 <script src="js/d3.min.js"></script>
 
                 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
