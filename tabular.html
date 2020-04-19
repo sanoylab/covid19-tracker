@@ -185,7 +185,7 @@
 
                 let apiCountryData = async () => {
                     let response = await fetch(
-                        'https://corona.lmao.ninja/countries?sort=cases'); //api end point
+                        'https://corona.lmao.ninja/v2/countries?sort=cases'); //api end point
                     return response.json();
                 }
 
@@ -249,7 +249,7 @@
                     }
                     let apiGlobalData = async () => {
                         let response = await fetch(
-                            'https://corona.lmao.ninja/all'); //api end point
+                            'https://corona.lmao.ninja/v2/all'); //api end point
                         return response.json();
                     }
                     apiGlobalData().then((res) => {
@@ -267,7 +267,7 @@
 
                     let apiCountryData = async () => {
                         let response = await fetch(
-                            'https://corona.lmao.ninja/countries?sort=cases'); //api end point
+                            'https://corona.lmao.ninja/v2/countries?sort=cases'); //api end point
                         return response.json();
                     }
 
