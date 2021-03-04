@@ -1,10 +1,10 @@
 # COVID-19 TRACKER
 
-A simple Vanilla JavaScript and PHP application tracks Covid 19 
+A Vanilla JavaScript Covid 19 Tracking App
 
-https://simple-covid19-tracker.herokuapp.com/
+DEMO: https://simple-covid19-tracker.herokuapp.com/
 
-![alt text](https://simple-covid19-tracker.herokuapp.com/screenshot.JPG)
+![alt text](https://raw.githubusercontent.com/sanoylab/covid19-tracker/master/screenshot.JPG)
 
 Data used from Rapid API 
 https://rapidapi.com/astsiatsko/api/coronavirus-monitor
